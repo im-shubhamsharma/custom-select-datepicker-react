@@ -7,12 +7,16 @@
   font-family: "Montserrat", sans-serif;
 
   ::-webkit-scrollbar {
-    width: 0; /* Remove scrollbar space */
-    background: transparent; /* Optional: just make scrollbar invisible */
+    width: 5px;
   }
-  /* Optional: show position indicator in red */
+  ::-webkit-scrollbar-track {
+    border-radius: 16px;
+    margin-block: 0.7rem;
+  }
   ::-webkit-scrollbar-thumb {
-    background: #ff0000;
+    height: 10px;
+    background: #556e9a;
+    border-radius: 16px;
   }
 }
 
@@ -25,18 +29,45 @@ body {
   min-height: 100vh;
   display: flex;
 
-  .dropdown-container {
-    flex-basis: 50%;
-    border: 2px solid variable.$bgLight;
-    padding: 5rem;
-  }
-
+  .dropdown-container,
   .datepicker-container {
     flex-basis: 50%;
-    // border: 2px solid lime;
+    border: 2px solid variable.$bgLight;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 10rem;
+
+    h2 {
+      font-style: normal;
+      font-weight: 500;
+      font-size: 24px;
+      line-height: 140%;
+      color: variable.$textDarkOnSelect;
+      margin-bottom: 2rem;
+      text-transform: uppercase;
+    }
   }
 }
 
-/* Mixins */
+@media screen and (max-width: 920px) {
+  //do Smth
+  .app {
+    flex-direction: column;
+
+    .dropdown-container,
+    .datepicker-container {
+      min-height: 100vh;
+    }
+  }
+}
 
 
+// ::-webkit-scrollbar {
+//   width: 0; /* Remove scrollbar space */
+//   background: transparent; /* Optional: just make scrollbar invisible */
+// }
+// /* Optional: show position indicator in red */
+// ::-webkit-scrollbar-thumb {
+//   background: #ff0000;
+// }

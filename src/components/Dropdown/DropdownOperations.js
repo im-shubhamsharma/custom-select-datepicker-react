@@ -10,7 +10,7 @@ export const selectAll = (e, setData) => {
 
 export const selectGroup = (e, setData) => {
   const { checked, id } = e.target;
-  //   console.log(id);
+
   setData((prevData) =>
     prevData.map((data) =>
       data.id.group === id ? { ...data, checked: checked } : data
@@ -22,7 +22,6 @@ export const selectGroup = (e, setData) => {
 export const selectIndividual = (e, setData) => {
   const { checked, id } = e.target;
   const groupId = e.target.attributes.groupid.value;
-  console.log(groupId);
 
   setData((prevData) =>
     prevData.map((data) =>

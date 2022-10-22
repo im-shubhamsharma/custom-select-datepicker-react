@@ -45,7 +45,7 @@
         border-radius: 50%;
         border: 4px solid variable.$bgLight;
 
-        margin-left: -22px;
+        margin-left: -24px;
 
         &:nth-child(1) {
           z-index: 8;
@@ -94,17 +94,24 @@
   -----Options Styles Started------
   -------------------------------- */
   .options {
+    width: 100%;
     position: absolute;
     top: 56px;
-    width: 100%;
-    height: 390px;
-    overflow-y: scroll;
     background-color: variable.$bgDark;
     color: variable.$textLight;
     border-radius: 1rem;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
+
+    .option-list {
+      width: 100%;
+      margin: auto;
+      max-height: 390px;
+      overflow-x: hidden;
+      overflow-y: auto;
+      
+    }
 
     .search-bar {
       width: 100%;
@@ -133,7 +140,7 @@
         color: variable.$textLight;
         border: none;
         padding: 1.2rem 0;
-        
+
         &:focus,
         &:active {
           outline: none;
@@ -146,6 +153,12 @@
           font-feature-settings: "tnum" on, "lnum" on;
         }
       }
+    }
+
+    .not-found {
+      width: 100%;
+      min-height: 3.1rem;
+      padding: 1.2rem;
     }
   }
 }

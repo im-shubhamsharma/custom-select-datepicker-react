@@ -5,6 +5,7 @@ import { demoData } from "../../utils/data";
 import searchIcon from "../../assets/searchIcon.svg";
 import DropdownOption from "../DropdownOption/DropdownOption";
 import { selectAll, selectGroup, selectIndividual } from "./DropdownOperations";
+import { debounce } from "../../utils/debouncer";
 import "./Dropdown.scss";
 
 const Dropdown = () => {
@@ -59,7 +60,7 @@ const Dropdown = () => {
   const [selectedCount, setSelectedCount] = useState(0);
   const [totalEmpCount, setTotalEmpCount] = useState(0);
 
-  /* Use Effect to update our selected count*/
+  /* Use Effect to update our selected count and total emp cound*/
   useEffect(() => {
     setSelectedCount(
       data.reduce((total, curr) => {
@@ -82,17 +83,27 @@ const Dropdown = () => {
     setActive((prev) => !prev);
   };
 
-  // console.log(selectedCount);
-  // console.log(data);
-
   /* Search Functionality */
   const [searchInput, setSearchInput] = useState("");
+  const [searchResult, setSearchResult] = useState([]);
 
   const handleSearch = (e) => {
     setSearchInput(e.target.value);
   };
 
-  console.log(searchInput);
+  useEffect(() => {
+    setSearchResult(
+      data.filter(
+        (employee) =>
+          employee.type.toLowerCase() === "individual" &&
+          employee.name.toLowerCase().includes(searchInput.toLowerCase())
+      )
+    );
+    if (!searchInput) {
+      setSearchResult([]);
+    }
+  }, [searchInput]);
+  /* Search Functionality Ends*/
 
   return (
     <div>
@@ -118,90 +129,132 @@ const Dropdown = () => {
             <input
               type="text"
               placeholder="Search employee..."
-              value={searchInput}
-              onChange={handleSearch}
+              // value={searchInput}
+              onChange={debounce(handleSearch)}
             />
           </div>
-          {/* all employeees */}
-          <div className="dropdown-option-container">
-            {data
-              .filter((employee) => employee.type.toLowerCase() === "all")
-              .map((item) => (
-                <DropdownOption
-                  key={item.id}
-                  data={data}
-                  employee={item}
-                  totalEmpCount={totalEmpCount}
-                  operations={{ handleChange: selectAll, setData }}
-                />
-              ))}
+
+          <div className="option-list">
+            {searchInput.length > 0 ? (
+              searchResult.length > 0 ? (
+                <>
+                  {searchResult.map((employee) => (
+                    <div className="dropdown-option-container">
+                      <DropdownOption
+                        key={employee.id.individual}
+                        employee={employee}
+                        operations={{
+                          handleChange: selectIndividual,
+                          setData: setData,
+                          setSearchResult: setSearchResult,
+                        }}
+                      />
+                      <hr />
+                    </div>
+                  ))}
+                </>
+              ) : (
+                <p className="not-found">Not Found</p>
+              )
+            ) : (
+              <div>
+                {/* all employeees */}
+                <div className="dropdown-option-container">
+                  {data
+                    .filter((employee) => employee.type.toLowerCase() === "all")
+                    .map((item) => (
+                      <DropdownOption
+                        key={item.id}
+                        data={data}
+                        employee={item}
+                        totalEmpCount={totalEmpCount}
+                        operations={{ handleChange: selectAll, setData }}
+                      />
+                    ))}
+                </div>
+                <hr />
+                {/* favorite */}
+                <div className="dropdown-option-container">
+                  {data
+                    .filter(
+                      (employee) =>
+                        employee.type.toLowerCase() === "individual" &&
+                        employee.favorite
+                    )
+                    .map((item) => (
+                      <DropdownOption
+                        key={item.id.individual}
+                        employee={item}
+                        operations={{ handleChange: selectIndividual, setData }}
+                      />
+                    ))}
+                </div>
+                <hr />
+
+                {/* all practitioners */}
+                <div className="dropdown-option-container">
+                  {data
+                    .filter(
+                      (employee) =>
+                        employee.type.toLowerCase() === "group" &&
+                        employee.name.toLowerCase() === "practitioner"
+                    )
+                    .map((item) => (
+                      <DropdownOption
+                        key={item.id.group}
+                        employee={item}
+                        operations={{ handleChange: selectGroup, setData }}
+                      />
+                    ))}
+                  {data
+                    .filter(
+                      (employee) =>
+                        employee.type.toLowerCase() === "individual" &&
+                        employee.group.toLowerCase() === "practitioner"
+                    )
+                    .map((item) => (
+                      <DropdownOption
+                        key={item.id.individual}
+                        employee={item}
+                        operations={{ handleChange: selectIndividual, setData }}
+                      />
+                    ))}
+                </div>
+
+                <hr />
+
+                {/* all assistants */}
+                <div className="dropdown-option-container">
+                  {data
+                    .filter(
+                      (employee) =>
+                        employee.type.toLowerCase() === "group" &&
+                        employee.name.toLowerCase() === "assistant"
+                    )
+                    .map((item) => (
+                      <DropdownOption
+                        key={item.id.group}
+                        employee={item}
+                        operations={{ handleChange: selectGroup, setData }}
+                      />
+                    ))}
+                  {data
+                    .filter(
+                      (employee) =>
+                        employee.type.toLowerCase() === "individual" &&
+                        employee.group.toLowerCase() === "assistant"
+                    )
+                    .map((item) => (
+                      <DropdownOption
+                        key={item.id.individual}
+                        employee={item}
+                        operations={{ handleChange: selectIndividual, setData }}
+                      />
+                    ))}
+                </div>
+              </div>
+            )}
           </div>
-
-          <hr />
-
-          {/* all practitioners */}
-          <div className="dropdown-option-container">
-            {data
-              .filter(
-                (employee) =>
-                  employee.type.toLowerCase() === "group" &&
-                  employee.name.toLowerCase() === "practitioner"
-              )
-              .map((item) => (
-                <DropdownOption
-                  key={item.id.group}
-                  employee={item}
-                  operations={{ handleChange: selectGroup, setData }}
-                />
-              ))}
-            {data
-              .filter(
-                (employee) =>
-                  employee.type.toLowerCase() === "individual" &&
-                  employee.group.toLowerCase() === "practitioner"
-              )
-              .map((item) => (
-                <DropdownOption
-                  key={item.id.individual}
-                  employee={item}
-                  operations={{ handleChange: selectIndividual, setData }}
-                />
-              ))}
-          </div>
-
-          <hr />
-
-          {/* all assistants */}
-          <div className="dropdown-option-container">
-            {data
-              .filter(
-                (employee) =>
-                  employee.type.toLowerCase() === "group" &&
-                  employee.name.toLowerCase() === "assistant"
-              )
-              .map((item) => (
-                <DropdownOption
-                  key={item.id.group}
-                  employee={item}
-                  operations={{ handleChange: selectGroup, setData }}
-                />
-              ))}
-            {data
-              .filter(
-                (employee) =>
-                  employee.type.toLowerCase() === "individual" &&
-                  employee.group.toLowerCase() === "assistant"
-              )
-              .map((item) => (
-                <DropdownOption
-                  key={item.id.individual}
-                  employee={item}
-                  operations={{ handleChange: selectIndividual, setData }}
-                />
-              ))}
-          </div>
-
-          <hr />
         </div>
       </div>
     </div>

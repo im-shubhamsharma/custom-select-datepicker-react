@@ -2,8 +2,8 @@ import React from "react";
 import "./DropdownOption.scss";
 
 const DropdownOption = (props) => {
-  const { avatar, name, id, group, checked, type } = props.employee;
-  const { handleChange, setData } = props.operations;
+  const { avatar, name, id, checked, type, favorite } = props.employee;
+  const { handleChange, setData, setSearchResult } = props.operations;
 
   if (type.toLowerCase() === "all") {
     return (
@@ -51,12 +51,14 @@ const DropdownOption = (props) => {
         <p>{name}</p>
       </label>
       <input
-        className="checkbox"
         type="checkbox"
         id={id.individual}
         groupid={id.group}
         checked={checked}
-        onChange={(e) => handleChange(e, setData)}
+        onChange={(e) =>  {
+            handleChange(e, setData);
+            if(setSearchResult) handleChange(e, setSearchResult);
+        }}
       />
     </div>
   );
