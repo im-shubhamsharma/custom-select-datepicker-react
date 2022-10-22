@@ -1,0 +1,42 @@
+@use "./styles/variable";
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Montserrat", sans-serif;
+
+  ::-webkit-scrollbar {
+    width: 0; /* Remove scrollbar space */
+    background: transparent; /* Optional: just make scrollbar invisible */
+  }
+  /* Optional: show position indicator in red */
+  ::-webkit-scrollbar-thumb {
+    background: #ff0000;
+  }
+}
+
+body {
+  font-family: "Montserrat", sans-serif;
+}
+
+.app {
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+
+  .dropdown-container {
+    flex-basis: 50%;
+    border: 2px solid variable.$bgLight;
+    padding: 5rem;
+  }
+
+  .datepicker-container {
+    flex-basis: 50%;
+    // border: 2px solid lime;
+  }
+}
+
+/* Mixins */
+
+

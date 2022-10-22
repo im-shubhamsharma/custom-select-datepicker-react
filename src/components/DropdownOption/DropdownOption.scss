@@ -1,0 +1,105 @@
+@use "../../styles/variable";
+
+/* Mixin */
+@mixin disableCopy {
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  -o-user-select: none;
+  user-select: none;
+}
+
+.dropdown-option-wrapper {
+  @include disableCopy();
+  cursor: pointer;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+//   padding: 0.5rem 1rem 0.5rem 1.25rem;
+  font-weight: 500;
+  font-size: 13px;
+  text-align: center;
+  font-feature-settings: "tnum" on, "lnum" on;
+  line-height: 140%;
+}
+
+.label {
+  cursor: pointer;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+
+  img {
+    width: 2rem;
+    border-radius: 50%;
+  }
+
+  h5 {
+    color: variable.$textLightSubheading;
+  }
+}
+
+.avatar-stack {
+  display: flex;
+  align-items: center;
+
+  span {
+    width: 2.25rem;
+    height: 2.25rem;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: 700;
+    background-color: variable.$bgDark;
+    color: variable.$bgLight;
+    border: 4px solid variable.$bgDark;
+    z-index: 10;
+  }
+  img {
+    width: 2.25rem;
+    border-radius: 50%;
+    border: 4px solid variable.$bgDark;
+
+    margin-left: -22px;
+
+    &:nth-child(1) {
+      z-index: 8;
+    }
+
+    &:nth-child(2) {
+      z-index: 6;
+    }
+  }
+}
+
+input[type="checkbox"] {
+  cursor: pointer;
+  width: 16px;
+  height: 16px;
+  position: relative;
+
+  &::before {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: variable.$bgSelect;
+  }
+  &:checked::before {
+    display: none;
+  }
+}
+
+.group-margin{
+    margin-bottom: 0.5rem;
+}
+
+
+
+
+
+
