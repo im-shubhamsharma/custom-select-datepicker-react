@@ -105,9 +105,19 @@ const Dropdown = () => {
   }, [searchInput]);
   /* Search Functionality Ends*/
 
+  //----Close menu if clicked outside of select
+  const catMenu = useRef(null);
+
+  const closeOpenMenus = (e) => {
+    if (catMenu.current && active && !catMenu.current.contains(e.target)) {
+      setActive(false);
+    }
+  };
+  document.addEventListener("mousedown", closeOpenMenus);
+
   return (
     <div>
-      <div className={`dropdown ${active ? "active" : ""}`}>
+      <div ref={catMenu} className={`dropdown ${active ? "active" : ""}`}>
         {/* Custom select header */}
         <div onClick={toggleSelect} className="select">
           <div className="select-avatar-stack">

@@ -12,6 +12,7 @@ const App = () => {
       <div className="datepicker-container">
         <h2>DATE PICKER</h2>
         <DatePicker />
+        <p>User can take appointment for current month plus next 3 months</p>
       </div>
     </div>
   );
