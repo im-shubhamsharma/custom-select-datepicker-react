@@ -129,9 +129,9 @@ export function getDatePickerData() {
 
   if (recentDay !== 0) {
     let moreDaysToFillOurCalendar = 7 - recentDay + 1;
-    let month = newMonth + 1;
+    let month = newMonth+1;
     let year = newYear;
-    if (newMonth === 13) {
+    if (month === 13) {
       month = 1;
       year += 1;
     }
